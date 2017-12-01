@@ -84,9 +84,6 @@ provider "ucd" {
   ucd_server_url = "${var.ucd_server_url}"
 }
 provider "aws" {
-  access_key = "${var.aws_access_id}"
-  secret_key = "${var.aws_secret_key}"
-  region     = "${var.region}"
 }
 
 ##############################################################################
