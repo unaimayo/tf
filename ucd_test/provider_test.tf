@@ -27,14 +27,6 @@
 #####################
 #  AWS Information  #
 #####################
-variable "aws_access_id" {
-  description = "Your AWS access id"
-}
-
-variable "aws_secret_key" {
-  description = "Your AWS secret key"
-}
-
 variable "region" {
   description = "The AWS region for provisioning."
   default = "us-east-1"
