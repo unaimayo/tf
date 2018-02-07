@@ -111,6 +111,10 @@ variable "ucd_password" {
   description = "Generated"
 }
 
+data "softlayer_ssh_key" "public_key" {
+    label = "${var.tomcat_ssh_keys}"
+}
+
 resource "softlayer_virtual_guest" "tomcat" {
   cpu="${var.tomcat_virtual_guest_number_of_cores}"
   local_disk = "${var.local_disk}"
@@ -120,7 +124,7 @@ resource "softlayer_virtual_guest" "tomcat" {
   image="${var.tomcat_virtual_guest-image}"
   domain = "${var.domain_name}"
   hourly_billing = "${var.tomcat_virtual_guest_hourly_billing}"
-  ssh_keys = ["${var.tomcat_ssh_keys}"]
+  ssh_keys = ["${data.softlayer_ssh_key.public_key.id}"]
   provisioner "ucd" {
     agent_name      = "${var.agent_name}"
     ucd_server_url  = "${var.ucd_server_url}"
