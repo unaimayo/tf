@@ -114,7 +114,7 @@ resource "aws_instance" "ucd-provider-test-server" {
     private_key = "${tls_private_key.ssh.private_key_pem}"
   }
 
-  provisioner "urbancode-deploy" {
+  provisioner "ucd" {
     agent_name      = "${var.server_agent_name}"
     ucd_server_url  = "${var.ucd_server_url}"
     ucd_user        = "${var.ucd_user}"
