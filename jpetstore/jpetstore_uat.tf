@@ -8,7 +8,7 @@ terraform {
   required_version = "> 0.7.0"
 }
 
-provider "ibmcloud" {
+provider "ibm" {
 }
 
 variable "tomcat_virtual_guest_number_of_cores" {
