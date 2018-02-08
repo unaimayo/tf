@@ -84,6 +84,13 @@ systemctl start mysql
 systemctl enable mysql
 echo -e "\n\n$PASSWORD\n$PASSWORD\n\n\nn\n\n " | mysql_secure_installation 2>/dev/null
 
+cat << EOT > createdb.sql
+create database jpetstore;
+create user 'jpetstore'@'localhost' identified by 'jppwd';
+grant all privileges on jpetstore.* to 'jpetstore'@'%' identified by 'jppwd';
+EOT
+mysql -p$PASSWORD < createdb.sql
+
 EOF
 
     destination = "/tmp/install_mariadb.sh"
