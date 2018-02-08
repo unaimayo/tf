@@ -109,13 +109,6 @@ resource "aws_instance" "dbserver" {
 #!/bin/bash
 LOGFILE="/var/log/addkey.log"
 PASSWORD=$1
-
-fail() {
-  REASON=${1=error}
-  echo $REASON | tee -a $LOGFILE 2>&1
-  exit 1
-}
-
 apt-get update
 apt-get install mariadb-server mariadb-client -y
 systemctl start mysql
