@@ -18,12 +18,11 @@ provider "ucd" {
   ucd_server_url = "${var.ucd_server_url}"
 }
 
-##> Parameters
 variable "ami" {
   type = "string"
   description = "Generated" 
-  # Centos 7 eu-central-1 ami
-  default = " ami-337be65c"
+  # Ubuntu 16.04 eu-central-1 ami
+  default = "ami-5055cd3f"
 }
 
 variable "aws_instance_type" {
@@ -76,11 +75,6 @@ variable "tomcat_version" {
   description = "Generated"
 }
 
-variable "agent_name" {
-  type = "string"
-  description = "Generated"
-}
-
 variable "ucd_server_url" {
   type = "string"
   description = "Generated"
@@ -113,7 +107,6 @@ data "aws_vpc" "selected_vpc" {
   }
 }
 
-##> SSL
 resource "tls_private_key" "ssh" {
   algorithm = "RSA"
 }
@@ -123,7 +116,6 @@ resource "aws_key_pair" "internal_key" {
   public_key = "${tls_private_key.ssh.public_key_openssh}"
 }
 
-##> DB Server
 resource "aws_instance" "dbserver" {
   ami = "${var.ami}"
   key_name = "${aws_key_pair.internal_key.id}"
@@ -231,24 +223,18 @@ TOMCAT_VERSION=$2
 TOMCAT_ADMIN_USER=$3
 TOMCAT_ADMIN_PWD=$4
 
-fail() {
-  REASON=${1=error}
-  echo $REASON | tee -a $LOGFILE 2>&1
-  exit 1
-}
-
-yum install -y wget
+apt-get install -y wget
 # create user and group
-groupadd $TOMCAT_GROUP || fail "Error creating group $TOMCAT_GROUP"
-useradd -M -s /bin/nologin -g $TOMCAT_GROUP -d $TOMCAT_PATH $TOMCAT_USER || fail "Error creating user tomcat"
-mkdir -p $TOMCAT_PATH || fail "Error creating $TOMCAT_PATH"
+groupadd $TOMCAT_GROUP
+useradd -M -s /bin/nologin -g $TOMCAT_GROUP -d $TOMCAT_PATH $TOMCAT_USER
+mkdir -p $TOMCAT_PATH
 # download software
 TOMCAT_SOFT="apache-tomcat-$TOMCAT_VERSION.tar.gz"
-wget http://apache.rediris.es/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/$TOMCAT_SOFT || fail "Error downloading $TOMCAT_SOFT"
+wget http://apache.rediris.es/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/$TOMCAT_SOFT
 # install jdk
-yum install -y java-1.7.0-openjdk-devel || fail "Error installing java 1.7"
+apt-get install -y openjdk-8-jdk
 # install tomcat
-tar xfz $TOMCAT_SOFT -C $TOMCAT_PATH --strip-components=1 || fail "Error unpacking $TOMCAT_SOFT"
+tar xfz $TOMCAT_SOFT -C $TOMCAT_PATH --strip-components=1
 # create admin user
 cat << EOT > $TOMCAT_PATH/conf/tomcat-users.xml
 <?xml version="1.0" encoding="UTF-8"?>
