@@ -16,7 +16,7 @@ variable "ami" {
   type = "string"
   description = "Generated" 
   # Centos 7 eu-central-1 ami
-  default = " ami-337be65c"
+  default = "ami-5055cd3f"
 }
 
 variable "aws_instance_type" {
@@ -72,7 +72,7 @@ resource "aws_instance" "dbserver" {
 #!/bin/bash
 LOGFILE="/var/log/addkey.log"
 PASSWORD=$1
-yum install -y mariadb-server
+apt-get install mariadb-server mariadb-client
 systemctl start mariadb
 systemctl enable mariadb
 
