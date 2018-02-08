@@ -78,7 +78,8 @@ resource "aws_instance" "dbserver" {
 #!/bin/bash
 LOGFILE="/var/log/addkey.log"
 PASSWORD=$1
-apt-get install mariadb-server mariadb-client
+apt-get update
+apt-get install mariadb-server mariadb-client -y
 systemctl start mariadb
 systemctl enable mariadb
 
