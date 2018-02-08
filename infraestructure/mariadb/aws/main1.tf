@@ -67,6 +67,12 @@ resource "aws_instance" "dbserver" {
   key_name = "${aws_key_pair.internal_key.id}"
   instance_type = "${var.aws_instance_type}"
   vpc_security_group_ids = ["${aws_security_group.mysql.id}"]
+  
+  connection {
+    user = "ubuntu"
+    private_key = "${tls_private_key.ssh.private_key_pem}"
+  }
+  
   provisioner "file" {
     content = <<EOF
 #!/bin/bash
