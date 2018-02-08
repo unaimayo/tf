@@ -131,9 +131,9 @@ resource "aws_instance" "dbserver" {
 #!/bin/bash
 LOGFILE="/var/log/addkey.log"
 PASSWORD=$1
-yum install -y mariadb-server
-systemctl start mariadb
-systemctl enable mariadb
+apt-get install -y mariadb-server
+systemctl start mysql
+systemctl enable mysql
 echo -e "\n\n$PASSWORD\n$PASSWORD\n\n\nn\n\n " | mysql_secure_installation 2>/dev/null
 
 cat << EOT > createdb.sql
