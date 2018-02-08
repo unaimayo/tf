@@ -11,6 +11,12 @@ terraform {
 provider "aws" {
 }
 
+provider "ucd" {
+  username       = "${var.ucd_user}"
+  password       = "${var.ucd_password}"
+  ucd_server_url = "${var.ucd_server_url}"
+}
+
 ##> Parameters
 variable "ami" {
   type = "string"
@@ -40,6 +46,31 @@ variable "mariadb_password" {
 }
 
 variable "aws_vpc_name" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "environment_name" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "agent_name" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "ucd_user" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "ucd_password" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "ucd_server_url" {
   type = "string"
   description = "Generated"
 }
@@ -101,6 +132,13 @@ EOF
       "chmod +x /tmp/install_mariadb.sh; sudo bash /tmp/install_mariadb.sh \"${var.mariadb_password}\"",
     ]
   }
+  
+  provisioner "ucd" {
+    agent_name      = "${var.agent_name}"
+    ucd_server_url  = "${var.ucd_server_url}"
+    ucd_user        = "${var.ucd_user}"
+    ucd_password    = "${var.ucd_password}"
+  }
  
   tags {
     Name = "${var.dbserver_name}"
@@ -141,4 +179,48 @@ resource "aws_security_group" "mysql" {
     Name = "mysql"
   }
 }
+
+resource "ucd_component_mapping" "JPetStore_DB" {
+  component = "JPetStore-DB"
+  description = "JPetStore-DB Component"
+  parent_id = "${ucd_agent_mapping.dbserver_agent.id}"
+}
+
+resource "ucd_component_process_request" "JPetStore_DB" {
+  component = "JPetStore-DB"
+  environment = "${ucd_environment.environment.id}"
+  process = "Deploy DB Component"
+  resource = "${ucd_component_mapping.JPetStore_DB.id}"
+  version = "2.0"
+}
+
+resource "ucd_resource_tree" "resource_tree" {
+  base_resource_group_name = "Base Resource for environment ${var.environment_name}"
+}
+
+resource "ucd_environment" "environment" {
+  name = "${var.environment_name}"
+  application = "JPetStore"
+  base_resource_group ="${ucd_resource_tree.resource_tree.id}"
+  component_property {
+      component = "JPetStore-DB"
+      name = "db.password"
+      value = ""
+      secure = true
+  }
+  component_property {
+      component = "JPetStore-DB"
+      name = "db.user"
+      value = "jpetstore"
+      secure = false
+  }
+  
+}
+
+resource "ucd_agent_mapping" "dbserver_agent" {
+  description = "Agent to manage the dbserver server"
+  agent_name = "${var.agent_name}.${aws_instance.dbserver.private_ip}"
+  parent_id = "${ucd_resource_tree.resource_tree.id}"
+}
+
 
