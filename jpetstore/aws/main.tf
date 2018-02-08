@@ -26,19 +26,14 @@ variable "ami" {
   default = " ami-337be65c"
 }
 
-variable "key_pair_name" {
-  type = "string"
-  description = "Key pair to be created"
-}
-
 variable "aws_instance_type" {
   type = "string"
   description = "Generated"
 }
 
-variable "dbserver_availability_zone" {
+variable "key_pair_name" {
   type = "string"
-  description = "Generated"
+  description = "Key pair to be created"
 }
 
 variable "dbserver_name" {
@@ -46,37 +41,7 @@ variable "dbserver_name" {
   description = "Generated"
 }
 
-variable "agent_name" {
-  type = "string"
-  description = "Generated"
-}
-
-variable "ucd_server_url" {
-  type = "string"
-  description = "Generated"
-}
-
-variable "ucd_user" {
-  type = "string"
-  description = "Generated"
-}
-
-variable "ucd_password" {
-  type = "string"
-  description = "Generated"
-}
-
-variable "aws_vpc_name" {
-  type = "string"
-  description = "Generated"
-}
-
-variable "environment_name" {
-  type = "string"
-  description = "Generated"
-}
-
-variable "webserver_availability_zone" {
+variable "mariadb_password" {
   type = "string"
   description = "Generated"
 }
@@ -111,7 +76,32 @@ variable "tomcat_version" {
   description = "Generated"
 }
 
-variable "mariadb_password" {
+variable "agent_name" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "ucd_server_url" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "ucd_user" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "ucd_password" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "aws_vpc_name" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "environment_name" {
   type = "string"
   description = "Generated"
 }
@@ -123,6 +113,7 @@ data "aws_vpc" "selected_vpc" {
   }
 }
 
+##> SSL
 resource "tls_private_key" "ssh" {
   algorithm = "RSA"
 }
@@ -132,11 +123,11 @@ resource "aws_key_pair" "internal_key" {
   public_key = "${tls_private_key.ssh.public_key_openssh}"
 }
 
+##> DB Server
 resource "aws_instance" "dbserver" {
   ami = "${var.ami}"
   key_name = "${aws_key_pair.internal_key.id}"
   instance_type = "${var.aws_instance_type}"
-  availability_zone = "${var.dbserver_availability_zone}"
   vpc_security_group_ids = ["${aws_security_group.mysql.id}"]
   connection {
     user = "ubuntu"
@@ -177,7 +168,7 @@ EOF
   }
   
   provisioner "ucd" {
-    agent_name      = "${var.agent_name}"
+    agent_name      = "${var.environment_name}"
     ucd_server_url  = "${var.ucd_server_url}"
     ucd_user        = "${var.ucd_user}"
     ucd_password    = "${var.ucd_password}"
@@ -187,12 +178,46 @@ EOF
   }
 }
 
+resource "aws_security_group" "mysql" {
+  name = "mysql"
+  description = "TODO"
+  vpc_id = "${data.aws_vpc.selected_vpc.id}"
+  ingress {
+    from_port = 2000
+    to_port = 5010
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  ingress {
+    from_port = 3306
+    to_port = 3306
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags {
+    Name = "mysql"
+  }
+}
 
+##> Web Server
 resource "aws_instance" "webserver" {
   ami = "${var.ami}"
   key_name = "${aws_key_pair.internal_key.id}"
   instance_type = "${var.aws_instance_type}"
-  availability_zone = "${var.webserver_availability_zone}"
   vpc_security_group_ids = ["${aws_security_group.webserver.id}"]
   connection {
     user = "ubuntu"
@@ -288,48 +313,13 @@ EOF
   }
   
   provisioner "ucd" {
-    agent_name      = "${var.agent_name}"
+    agent_name      = "${var.environment_name}"
     ucd_server_url  = "${var.ucd_server_url}"
     ucd_user        = "${var.ucd_user}"
     ucd_password    = "${var.ucd_password}"
   }
   tags {
     Name = "${var.webserver_name}"
-  }
-}
-
-resource "aws_security_group" "mysql" {
-  name = "mysql"
-  description = "TODO"
-  vpc_id = "${data.aws_vpc.selected_vpc.id}"
-  ingress {
-    from_port = 2000
-    to_port = 5010
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  
-  ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  
-  ingress {
-    from_port = 3306
-    to_port = 3306
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  tags {
-    Name = "mysql"
   }
 }
 
@@ -368,6 +358,7 @@ resource "aws_security_group" "webserver" {
   }
 }
 
+##> UCD
 resource "ucd_component_mapping" "JPetStore_DB" {
   component = "JPetStore-DB"
   description = "JPetStore-DB Component"
@@ -460,13 +451,13 @@ resource "ucd_environment" "environment" {
 
 resource "ucd_agent_mapping" "dbserver_agent" {
   description = "Agent to manage the dbserver server"
-  agent_name = "${var.agent_name}.${aws_instance.dbserver.private_ip}"
+  agent_name = "${var.environment_name}.${aws_instance.dbserver.private_ip}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
 }
 
 resource "ucd_agent_mapping" "webserver_agent" {
   description = "Agent to manage the webserver server"
-  agent_name = "${var.agent_name}.${aws_instance.webserver.private_ip}"
+  agent_name = "${var.environment_name}.${aws_instance.webserver.private_ip}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
 }
 
@@ -477,3 +468,5 @@ resource "ucd_application_process_request" "application_process_request" {
   snapshot = "1.0"
   environment = "${ucd_environment.environment.name}"
 }
+
+##> Outputs

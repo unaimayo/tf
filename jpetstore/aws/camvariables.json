@@ -1,0 +1,176 @@
+[
+    {
+        "name": "ami",
+        "type": "string",
+        "description": "Operating system image id / template that should be used when creating the virtual image",
+        "default": "ami-337be65c",
+        "hidden": false,
+        "label": "Operating System ID",
+        "secured": false,
+        "required": true,
+        "immutable": false
+    },
+    {
+        "name": "aws_instance_type",
+        "type": "string",
+        "description": "VM Size",
+        "hidden": false,
+        "immutable": false,
+        "label": "Instance Type",
+        "required": true,
+        "secured": false,
+        "options": [
+          {
+              "value": "t2.micro",
+              "label": "t2.micro",
+              "default": "true"
+          },
+          {
+              "value": "t2.small",
+              "label": "t2.small"
+          }
+        ]
+    },
+    {
+        "name": "key_pair_name",
+        "type": "string",
+        "description": "Key pair to be created",
+        "default": "",
+        "hidden": false,
+        "label": "Key Pair Name",
+        "secured": false,
+        "required": true,
+        "immutable": false
+    },
+    {
+        "name": "dbserver_name",
+        "type": "string",
+        "default": "dbserver",
+        "description": "The hostname of server with myariadb; Allow 1 to 64 alphanumeric characters",
+        "hidden": false,
+        "immutable": false,
+        "label": "Hostname of MariaDB Server",
+        "required": true,
+        "secured": false,
+        "regex": "^[A-Za-z0-9]{1,64}$"
+    },
+    {
+        "name": "mariadb_password",
+        "type": "string",
+        "description": "Password for the MariaDB administrator user (root)",
+        "hidden": false,
+        "immutable": false,
+        "label": "MariaDB Administrator Password",
+        "required": true,
+        "secured": true,
+        "regex": "^[A-Za-z0-9 +=._:@-]{4,12}$"
+    },
+    {
+        "name": "webserver_name",
+        "type": "string",
+        "default": "webserver",
+        "description": "NThe hostname of server with myariadb; Allow 1 to 64 alphanumeric characters",
+        "hidden": false,
+        "immutable": false,
+        "label": "Hostname of Tomcat Server",
+        "required": true,
+        "secured": false,
+        "regex": "^[A-Za-z0-9]{1,64}$"
+    },
+    {
+        "name": "tomcat_home",
+        "type": "string",
+        "description": "Installation path for the Tomcat server",
+        "hidden": false,
+        "immutable": false,
+        "label": "Tomcat Home",
+        "required": true,
+        "secured": false,
+    },
+    {
+        "name": "tomcat_version",
+        "type": "string",
+        "default": "8.0.49",
+        "description": "Version of Tomcat to be installed",
+        "hidden": false,
+        "immutable": false,
+        "label": "Tomcat Version",
+        "required": true,
+        "secured": false,
+        "regex": "^(8+\.)?(0+\.)?(\*|\d+)$"
+    },
+    {
+        "name": "tomcat_port",
+        "type": "string",
+        "default": "8080",
+        "description": "Port for the Tomcat server",
+        "hidden": false,
+        "immutable": false,
+        "label": "Tomcat Port",
+        "required": true,
+        "secured": false,
+        "regex": "^[0-9]{2,5}$"
+    },
+    {
+        "description": "Administrator user for the Tomcat server",
+        "type": "string",
+        "hidden": false,
+        "immutable": false,
+        "label": "Tomcat Administrator User",
+        "name": "tomcat_admin_user",
+        "default": "admin"
+        "required": true,
+        "secured": false,
+        "regex": "^[0-9A-Za-z]{4,16}$"
+    },
+    {
+        "name": "tomcat_admin_password",
+        "type": "string",
+        "description": "Password for the Tomcat administrator user",
+        "hidden": false,
+        "immutable": false,
+        "label": "Tomcat Administrator Password",
+        "required": true,
+        "secured": true,
+        "regex": "^[A-Za-z0-9 +=._:@-]{4,12}$"
+    },
+    {
+        "name": "aws_vpc_name",
+        "type": "string",
+        "description": "AWS Virtual Private Cloud to use",
+        "hidden": true,
+        "required": true,
+        "default": "default"
+    },
+    {
+        "name": "environment_name",
+        "type": "string",
+        "label": "UCD Application Environment",
+        "hidden": false,
+        "required": true,
+        "default": "JPetStore_UAT"
+    },
+    {
+        "name": "ucd_server_url",
+        "type": "string",
+        "label": "UCD Server URL",
+        "hidden": false,
+        "required": true,
+        "default": "https://159.8.228.106:8443"
+    },
+    {
+        "name": "ucd_user",
+        "type": "string",
+        "label": "UCD Server URL",
+        "hidden": false,
+        "required": true
+    },
+    {
+        "name": "ucd_password",
+        "type": "string",
+        "label": "UCD Server URL",
+        "hidden": false,
+        "secured": true,
+        "required": true
+    }
+]
