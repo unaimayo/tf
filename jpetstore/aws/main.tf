@@ -138,16 +138,10 @@ resource "aws_instance" "dbserver" {
     content = <<EOF
 #!/bin/bash
 LOGFILE="/var/log/addkey.log"
-PASSWORD=$1
-fail() {
-  REASON=${1=error}
-  echo $REASON | tee -a $LOGFILE 2>&1
-  exit 1
-}
-yum install -y mariadb-server || fail "Error installing package mariadb-server"
-systemctl start mariadb || fail "Error starting mariadb"
-systemctl enable mariadb || fail "Error enabling mariadb"
-echo -e "\n\n$PASSWORD\n$PASSWORD\n\n\nn\n\n " | mysql_secure_installation 2>/dev/null || fail "Error securing mariadb"
+PASSWORD=$1yum install -y mariadb-server
+systemctl start mariadb
+systemctl enable mariadb
+echo -e "\n\n$PASSWORD\n$PASSWORD\n\n\nn\n\n " | mysql_secure_installation 2>/dev/null
 
 cat << EOT > createdb.sql
 create database jpetstore;
@@ -173,6 +167,7 @@ EOF
     ucd_user        = "${var.ucd_user}"
     ucd_password    = "${var.ucd_password}"
   }
+  
   tags {
     Name = "${var.dbserver_name}"
   }
