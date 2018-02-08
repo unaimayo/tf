@@ -14,7 +14,6 @@ provider "aws" {
 provider "ucd" {
   username       = "${var.ucd_user}"
   password       = "${var.ucd_password}"
-  # centos 7 eu-central-1 ami
   ucd_server_url = "${var.ucd_server_url}"
 }
 
@@ -131,6 +130,7 @@ resource "aws_instance" "dbserver" {
 #!/bin/bash
 LOGFILE="/var/log/addkey.log"
 PASSWORD=$1
+apt-get update
 apt-get install -y mariadb-server
 systemctl start mysql
 systemctl enable mysql
