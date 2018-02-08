@@ -370,8 +370,8 @@ resource "ucd_environment" "environment" {
   component_property {
       component = "JPetStore-DB"
       name = "db.password"
-      value = ""
-      secure = true
+      value = "${var.mariadb_password}"
+      secure = false
   }
   component_property {
       component = "JPetStore-DB"
