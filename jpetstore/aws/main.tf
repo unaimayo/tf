@@ -132,6 +132,8 @@ LOGFILE="/var/log/addkey.log"
 PASSWORD=$1
 apt-get update
 apt-get install -y mariadb-server
+systemctl stop mysql
+sed -i "s/bind-address.*/bind-address = ::/" /etc/mysql/mariadb.conf.d/50-server.cnf
 systemctl start mysql
 systemctl enable mysql
 echo -e "\n\n$PASSWORD\n$PASSWORD\n\n\nn\n\n " | mysql_secure_installation 2>/dev/null
