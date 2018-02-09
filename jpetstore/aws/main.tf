@@ -279,6 +279,11 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOT
+# Add JPetSTore images folder
+mkdir -p /opt/jpetstore/images
+cd $TOMCAT_PATH/conf
+awk '/<\/Host>/ { print "        <Context docBase=\"/opt/jpetstore/images\" path=\"/images\" />"; print; next }1' server.xml > server.xml.1
+mv server.xml.1 server.xml
 # start & enable tomcat service
 systemctl enable tomcat || fail "Error enabling tomcat service"
 systemctl start tomcat || fail "Error starting tomcat service"
