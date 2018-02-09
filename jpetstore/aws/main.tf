@@ -459,3 +459,6 @@ resource "ucd_application_process_request" "application_process_request" {
 }
 
 ##> Outputs
+output "jpetstore" {
+  value = "http://${aws_instance.webserver.public_ip}:8080/JPetStore"
+}
