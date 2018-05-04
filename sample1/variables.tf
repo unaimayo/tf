@@ -4,21 +4,6 @@
 ##
 #####################################################################
 
-variable "ibm_bmx_api_key" {
-  type = "string"
-  description = "Generated"
-}
-
-variable "ibm_sl_username" {
-  type = "string"
-  description = "Generated"
-}
-
-variable "ibm_sl_api_key" {
-  type = "string"
-  description = "Generated"
-}
-
 variable "vm1_domain" {
   type = "string"
   description = "The domain for the computing instance."
