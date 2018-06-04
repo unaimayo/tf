@@ -251,7 +251,7 @@ resource "ucd_environment" "environment" {
   component_property {
       component = "JPetStore-APP"
       name = "db.url"
-      value = "${ibm_compute_vm_instance.vm_dbserver.ipv4_address}"
+      value = "jdbc:mysql://${ibm_compute_vm_instance.vm_dbserver.ipv4_address}:3306/jpetstore"
       secure = false
   }
   component_property {
