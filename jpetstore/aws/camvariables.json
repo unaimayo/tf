@@ -181,8 +181,8 @@
   ],
   "template_output_params": [  {
     "name": "jpetstore",
-    "label": "Jpetstore",
-    "description": "Jpetstore",
+    "label": "JPetStore URL",
+    "description": "JPetStore Application URL",
     "secured": false,
     "hidden": false,
     "shortname": ""
