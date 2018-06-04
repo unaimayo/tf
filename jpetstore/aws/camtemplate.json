@@ -1,0 +1,14 @@
+{
+   "name": "JPetStore UAT - AWS",
+   "description": "Template for JPetStore UAT enviroment on AWS",
+   "type": "userCreated",
+   "manifest": {
+     "template_type": "Terraform",
+     "template_format": "HCL",
+     "template_provider": "Amazon EC2"
+   },
+   "metadata": {
+     "displayName": "JPetStore UAT",
+     "bullets": []
+   }
+ }

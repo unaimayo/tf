@@ -1,10 +1,4 @@
-{
-  "input_datatypes": [ ],
-  "input_namespaces": [ ],
-  "output_namespace": "",
-  "input_groups": [ ],
-  "output_groups": [ ],
-  "template_input_params": [
+[
     {
         "name": "ami",
         "type": "string",
@@ -102,7 +96,8 @@
         "immutable": false,
         "label": "Tomcat Version",
         "required": true,
-        "secured": false
+        "secured": false,
+        "regex": "^(8+\.)?(0+\.)?(\*|\d+)$"
     },
     {
         "name": "tomcat_port",
@@ -123,7 +118,7 @@
         "immutable": false,
         "label": "Tomcat Administrator User",
         "name": "tomcat_admin_user",
-        "default": "admin",
+        "default": "admin"
         "required": true,
         "secured": false,
         "regex": "^[0-9A-Za-z]{4,16}$"
@@ -178,13 +173,4 @@
         "secured": true,
         "required": true
     }
-  ],
-  "template_output_params": [  {
-    "name": "jpetstore",
-    "label": "Jpetstore",
-    "description": "Jpetstore",
-    "secured": false,
-    "hidden": false,
-    "shortname": ""
-  } ]
-}
+]
