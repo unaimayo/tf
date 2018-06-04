@@ -107,6 +107,7 @@ TOMCAT_VERSION=$2
 TOMCAT_ADMIN_USER=$3
 TOMCAT_ADMIN_PWD=$4
 
+apt-get update
 apt-get install -y wget
 # create user and group
 groupadd $TOMCAT_GROUP
@@ -144,7 +145,7 @@ After=syslog.target network.target
 [Service]
 Type=forking
 
-Environment=JAVA_HOME=/usr/lib/jvm/jre
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 Environment=CATALINA_PID=$TOMCAT_PATH/temp/tomcat.pid
 Environment=CATALINA_HOME=$TOMCAT_PATH
 Environment=CATALINA_BASE=$TOMCAT_PATH
