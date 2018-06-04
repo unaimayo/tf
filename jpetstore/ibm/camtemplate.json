@@ -1,11 +1,11 @@
 {
-   "name": "ibm",
-   "description": "Description for ibm.",
+   "name": "JPetStore UAT",
+   "description": "Template for JPetStore UAT environments",
    "type": "userCreated",
    "manifest": {
      "template_type": "Terraform",
      "template_format": "HCL",
-     "template_provider": "Other"
+     "template_provider": "IBM"
    },
    "metadata": {
      "displayName": "ibm",
