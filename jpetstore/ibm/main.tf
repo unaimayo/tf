@@ -107,6 +107,7 @@ TOMCAT_VERSION=$2
 TOMCAT_ADMIN_USER=$3
 TOMCAT_ADMIN_PWD=$4
 
+apt-get update
 apt-get install -y wget
 # create user and group
 groupadd $TOMCAT_GROUP
