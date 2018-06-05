@@ -34,8 +34,8 @@ resource "ibm_compute_vm_instance" "vm_instance" {
     ucd_password    = "${var.ucd_password}"
   }
   connection {
-    user = "TODO"
-    private_key = "${var.private_key}"
+    user = "root"
+    private_key = "${tls_private_key.ssh.private_key_pem}"
   }
 }
 
@@ -73,7 +73,7 @@ resource "ucd_environment" "environment" {
   component_property {
       component = "C1"
       name = "prop1"
-      value = "value1"
+      value = "${var.prop1}"
       secure = false
   }
 }

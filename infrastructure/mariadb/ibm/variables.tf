@@ -42,12 +42,12 @@ variable "ucd_server_url" {
   default = "https://159.8.228.106:8443"
 }
 
-variable "private_key" {
+variable "environment_name" {
   type = "string"
   description = "Generated"
 }
 
-variable "environment_name" {
+variable "prop1" {
   type = "string"
   description = "Generated"
 }

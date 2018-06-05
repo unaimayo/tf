@@ -97,8 +97,8 @@
       "immutable_after_create": false
     },
     {
-      "name": "private_key",
-      "label": "Private Key",
+      "name": "environment_name",
+      "label": "Environment Name",
       "description": "Generated",
       "type": "string",
       "default": "",
@@ -110,8 +110,8 @@
       "immutable_after_create": false
     },
     {
-      "name": "environment_name",
-      "label": "Environment Name",
+      "name": "prop1",
+      "label": "Prop 1",
       "description": "Generated",
       "type": "string",
       "default": "",
