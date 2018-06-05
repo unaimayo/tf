@@ -48,17 +48,17 @@ resource "ibm_compute_ssh_key" "ibm_cloud_temp_public_key" {
   public_key = "${tls_private_key.ssh.public_key_openssh}"
 }
 
-resource "ucd_component_mapping" "C1" {
-  component = "C1"
-  description = "C1 Component"
+resource "ucd_component_mapping" "C2" {
+  component = "C2"
+  description = "C2 Component"
   parent_id = "${ucd_agent_mapping.vm_instance_agent.id}"
 }
 
-resource "ucd_component_process_request" "C1" {
-  component = "C1"
+resource "ucd_component_process_request" "C2" {
+  component = "C2"
   environment = "${ucd_environment.environment.id}"
   process = "install"
-  resource = "${ucd_component_mapping.C1.id}"
+  resource = "${ucd_component_mapping.C2.id}"
   version = "LATEST"
 }
 
@@ -70,12 +70,6 @@ resource "ucd_environment" "environment" {
   name = "${var.environment_name}"
   application = "Test"
   base_resource_group ="${ucd_resource_tree.resource_tree.id}"
-  component_property {
-      component = "C1"
-      name = "prop1"
-      value = "${var.prop1}"
-      secure = false
-  }
 }
 
 resource "ucd_agent_mapping" "vm_instance_agent" {

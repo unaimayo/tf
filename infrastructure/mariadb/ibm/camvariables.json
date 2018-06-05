@@ -110,19 +110,6 @@
       "immutable_after_create": false
     },
     {
-      "name": "prop1",
-      "label": "Prop 1",
-      "description": "Generated",
-      "type": "string",
-      "default": "",
-      "validation": "",
-      "required": true,
-      "secured": false,
-      "hidden": false,
-      "immutable": false,
-      "immutable_after_create": false
-    },
-    {
       "name": "vm_instance_agent_name",
       "label": "Vm Instance Agent Name",
       "description": "agent name",

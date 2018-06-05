@@ -47,11 +47,6 @@ variable "environment_name" {
   description = "Generated"
 }
 
-variable "prop1" {
-  type = "string"
-  description = "Generated"
-}
-
 variable "vm_instance_agent_name" {
   type = "string"
   description = "agent name"
