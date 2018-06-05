@@ -44,7 +44,7 @@ variable "ucd_server_url" {
 
 variable "environment_name" {
   type = "string"
-  description = "Generated"
+  description = "agent name"
 }
 
 variable "vm_instance_agent_name" {

@@ -18,7 +18,6 @@ provider "ucd" {
   ucd_server_url = "${var.ucd_server_url}"
 }
 
-
 resource "ibm_compute_vm_instance" "vm_instance" {
   cores       = 1
   memory      = 1024
@@ -70,6 +69,12 @@ resource "ucd_environment" "environment" {
   name = "${var.environment_name}"
   application = "Test"
   base_resource_group ="${ucd_resource_tree.resource_tree.id}"
+  component_property {
+      component = "C2"
+      name = "prop1"
+      value = "test"
+      secure = false
+  }
 }
 
 resource "ucd_agent_mapping" "vm_instance_agent" {
@@ -77,3 +82,4 @@ resource "ucd_agent_mapping" "vm_instance_agent" {
   agent_name = "${var.vm_instance_agent_name}.${ibm_compute_vm_instance.vm_instance.ipv4_address_private}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
 }
+

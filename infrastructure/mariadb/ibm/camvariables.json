@@ -99,7 +99,7 @@
     {
       "name": "environment_name",
       "label": "Environment Name",
-      "description": "Generated",
+      "description": "agent name",
       "type": "string",
       "default": "",
       "validation": "",
