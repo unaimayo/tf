@@ -1,8 +1,30 @@
 {
-  "input_datatypes": [ ],
+  "input_datatypes": [
+    {
+      "name": "ucdConnection",
+      "label": "UCD Connection"
+    } 
+  ],
   "input_namespaces": [ ],
   "output_namespace": "",
-  "input_groups": [ ],
+  "input_groups": [
+    {
+      "name": "Globals",
+      "label": "Globals"
+    },
+    {
+      "name": "undefined",
+      "label": "undefined"
+    },
+    {
+      "name": "Instances",
+      "label": "Instances"
+    },
+    {
+      "name": "Instances-ibm_compute_vm_instance",
+      "label": "Instances - ibm_compute_vm_instance"
+    }
+  ],
   "output_groups": [ ],
   "template_input_params": [
     {
@@ -12,6 +34,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Instances-ibm_compute_vm_instance",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -25,6 +48,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Globals",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -38,6 +62,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Instances-ibm_compute_vm_instance",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -51,6 +76,7 @@
       "type": "string",
       "default": "UBUNTU_16_64",
       "validation": "",
+      "group_name": "Instances-ibm_compute_vm_instance",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -64,6 +90,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Globals",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -77,6 +104,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Instances",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -90,6 +118,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Globals",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -103,6 +132,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Globals",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -116,6 +146,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Globals",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -129,6 +160,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Instances",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -142,6 +174,7 @@
       "type": "string",
       "default": "PasswordIsAuthToken",
       "validation": "",
+      "group_name": "Instances-ibm_compute_vm_instance",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -155,6 +188,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Instances-ibm_compute_vm_instance",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -168,6 +202,7 @@
       "type": "string",
       "default": "https://159.8.228.106:8443",
       "validation": "",
+      "group_name": "Instances-ibm_compute_vm_instance",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -181,6 +216,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "Globals",
       "required": true,
       "secured": false,
       "hidden": false,
@@ -194,6 +230,7 @@
       "type": "string",
       "default": "",
       "validation": "",
+      "group_name": "undefined",
       "required": true,
       "secured": false,
       "hidden": false,
