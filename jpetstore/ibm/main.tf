@@ -69,11 +69,22 @@ EOT
   }
   
   provisioner "ucd" {
-    agent_name      = "${var.vm_dbserver_hostname}"
+    agent_name      = "${var.vm_dbserver_hostname}.${random_id.vm_dbserver_agent_id.dec}"
     ucd_server_url  = "${var.ucd_server_url}"
     ucd_user        = "${var.ucd_user}"
     ucd_password    = "${var.ucd_password}"
   }
+  
+  provisioner "local-exec" {
+    when = "destroy"
+    command = <<EOT
+    curl -k -u ${var.ucd_user}:${var.ucd_password} ${var.ucd_server_url}/cli/agentCLI?agent=${var.vm_dbserver_hostname}.${random_id.vm_dbserver_agent_id.dec} -X DELETE
+EOT
+}
+}
+
+resource "random_id" "vm_dbserver_agent_id" {
+  byte_length = 8
 }
 
 resource "ibm_compute_vm_instance" "vm_webserver" {
@@ -183,11 +194,22 @@ EOT
   }
   
   provisioner "ucd" {
-    agent_name      = "${var.vm_webserver_hostname}"
+    agent_name      = "${var.vm_webserver_hostname}.${random_id.vm_webserver_agent_id.dec}"
     ucd_server_url  = "${var.ucd_server_url}"
     ucd_user        = "${var.ucd_user}"
     ucd_password    = "${var.ucd_password}"
   }
+  
+  provisioner "local-exec" {
+    when = "destroy"
+    command = <<EOT
+    curl -k -u ${var.ucd_user}:${var.ucd_password} ${var.ucd_server_url}/cli/agentCLI?agent=${var.vm_webserver_hostname}.${random_id.vm_webserver_agent_id.dec} -X DELETE
+EOT
+}
+}
+
+resource "random_id" "vm_webserver_agent_id" {
+  byte_length = 8
 }
 
 resource "tls_private_key" "ssh" {
@@ -288,17 +310,17 @@ resource "ucd_environment" "environment" {
 }
 
 resource "ucd_agent_mapping" "vm_dbserver_agent" {
+  depends_on = [ "ibm_compute_vm_instance.vm_dbserver" ]
   description = "Agent to manage the vm_dbserver server"
-  agent_name = "${var.vm_dbserver_hostname}.${ibm_compute_vm_instance.vm_dbserver.ipv4_address_private}"
+  agent_name = "${var.vm_dbserver_hostname}.${random_id.vm_dbserver_agent_id.dec}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
-  timeout = 300
 }
 
 resource "ucd_agent_mapping" "vm_webserver_agent" {
+  depends_on = [ "ibm_compute_vm_instance.vm_webserver" ]
   description = "Agent to manage the vm_webserver server"
-  agent_name = "${var.vm_webserver_hostname}.${ibm_compute_vm_instance.vm_webserver.ipv4_address_private}"
+  agent_name = "${var.vm_webserver_hostname}.${random_id.vm_webserver_agent_id.dec}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
-  timeout = 300
 }
 
 resource "ucd_application_process_request" "application_process_request" {
