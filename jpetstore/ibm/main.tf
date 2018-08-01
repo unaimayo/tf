@@ -291,12 +291,14 @@ resource "ucd_agent_mapping" "vm_dbserver_agent" {
   description = "Agent to manage the vm_dbserver server"
   agent_name = "${var.vm_dbserver_hostname}.${ibm_compute_vm_instance.vm_dbserver.ipv4_address_private}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
+  timeout = 300
 }
 
 resource "ucd_agent_mapping" "vm_webserver_agent" {
   description = "Agent to manage the vm_webserver server"
   agent_name = "${var.vm_webserver_hostname}.${ibm_compute_vm_instance.vm_webserver.ipv4_address_private}"
   parent_id = "${ucd_resource_tree.resource_tree.id}"
+  timeout = 300
 }
 
 resource "ucd_application_process_request" "application_process_request" {
