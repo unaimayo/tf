@@ -1,6 +1,6 @@
 {
-   "name": "JPetStore UAT",
-   "description": "Template for JPetStore UAT environments",
+   "name": "jpetstore_two-tier",
+   "description": "Template for JPetStore two-tier environments",
    "type": "userCreated",
    "manifest": {
      "template_type": "Terraform",
@@ -8,7 +8,26 @@
      "template_provider": "IBM"
    },
    "metadata": {
-     "displayName": "JPetStore UAT",
-     "bullets": []
+     "displayName": "JPetStore two-tier",
+     "bullets": [
+      {
+        "title": "Clouds",
+        "description": " IBM<br>"
+      },
+      {
+        "title": "Operating Systems Supported",
+        "description": "Ubuntu 16.04<br>"
+      },
+      {
+        "title": "Topology",
+        "description": "Two-tier web application (2 VMs) <br> Virtual Machine 1     : Apache Tomcat application server<br>Virtual Machine 2 : MariaDB relational database server<br>"},
+      {
+        "title": "Software Deployed",
+        "description": "Apache Tomcat<br>MariaDB<br>UCD Agent<br>JPetStore Application"
+      },
+      {
+        "title": "Default Virtual Machine Settings",
+        "description": " vCPU 1, Memory (GB) 2, Disk (GB) 20<br>"
+      }]
    }
  }

@@ -1,10 +1,8 @@
 {
-  "input_datatypes": [
-    {
-      "name": "ucdConnection",
-      "label": "UCD Connection"
-    } 
-  ],
+  "input_datatypes": [  {
+    "name": "ucdConnection",
+    "label": "UCD Connection"
+  } ],
   "input_namespaces": [ ],
   "output_namespace": "",
   "input_groups": [
@@ -238,5 +236,14 @@
       "immutable_after_create": false
     }
   ],
-  "template_output_params": [ ]
+  "template_output_params": [  {
+    "name": "url",
+    "label": "Application URL",
+    "description": "JPetStore application URL",
+    "group_name": "",
+    "secured": false,
+    "hidden": false,
+    "shortname": "",
+    "type": "string"
+  } ]
 }
