@@ -162,7 +162,7 @@ resource "null_resource" "execute_ansible" {
   # Create the Host File for example
   provisioner "file" {
     content = <<EOF
-default ansible_host=${azurerm_public_ip.web.ip_address} ansible_user='${var.admin_user}' ansible_password='${var.admin_user_password}'
+default ansible_host=${azurerm_public_ip.web.ip_address} ansible_user='${var.admin_user}' ansible_password='${var.admin_user_password}' ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 EOF
 
     destination = "/tmp/ansible-playbook-host"
