@@ -113,45 +113,6 @@ resource "azurerm_storage_container" "default" {
 # Deploy the virtual machine resource
 #########################################################
 resource "azurerm_virtual_machine" "web" {
-  count                 = "${var.user_public_key != "None" ? 1 : 0}"
-  name                  = "${var.name_prefix}-web-vm"
-  location              = "${var.azure_region}"
-  resource_group_name   = "${azurerm_resource_group.default.name}"
-  network_interface_ids = ["${azurerm_network_interface.web.id}"]
-  vm_size               = "Standard_A2"
-
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
-
-  storage_os_disk {
-    name          = "${var.name_prefix}-web-os-disk1"
-    vhd_uri       = "${azurerm_storage_account.default.primary_blob_endpoint}${azurerm_storage_container.default.name}/${var.name_prefix}-web-os-disk1.vhd"
-    caching       = "ReadWrite"
-    create_option = "FromImage"
-  }
-
-  os_profile {
-    computer_name  = "${var.name_prefix}-web"
-    admin_username = "${var.admin_user}"
-    admin_password = "${var.admin_user_password}"
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-
-    ssh_keys {
-      path     = "/home/${var.admin_user}/.ssh/authorized_keys"
-      key_data = "${var.user_public_key}"
-    }
-  }
-}
-
-resource "azurerm_virtual_machine" "web-alternative" {
-  count                 = "${var.user_public_key == "None" ? 1 : 0}"
   name                  = "${var.name_prefix}-web-vm"
   location              = "${var.azure_region}"
   resource_group_name   = "${azurerm_resource_group.default.name}"
@@ -183,5 +144,35 @@ resource "azurerm_virtual_machine" "web-alternative" {
   }
 }
 
+#################################
+# Execute Ansible playbook
+#################################
 
+resource "null_resource" "execute_ansible" {
+  depends_on = ["azurerm_virtual_machine.web"]
+
+  # Specify the ssh connection
+  connection {
+    type        = "ssh"
+    user        = "${var.ansible_user}"
+    password    = "${var.ansible_password}"
+    host        = "${var.ansible_host}"
+  }
+
+  # Create the Host File for example
+  provisioner "file" {
+    content = <<EOF
+default ansible_host=${azurerm_public_ip.web.ip_address} ansible_user='${var.admin_user}' ansible_password='${var.admin_user_password}'
+EOF
+
+    destination = "/tmp/ansible-playbook-host"
+  }
+
+  # Execute the script remotely
+  provisioner "remote-exec" {
+    inline = [
+      "cd agbar && ansible-playbook -i \"/tmp/ansible-playbook-host\" configure-linux-box.yml",
+    ]
+  }
+}
 

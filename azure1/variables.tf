@@ -27,7 +27,14 @@ variable "admin_user_password" {
   description = "Password of the newly created administrative user"
 }
 
-variable "user_public_key" {
-  description = "Public SSH key used to connect to the virtual machine"
-  default     = "None"
+variable "ansible_host" {
+  description = "Ansible host"
+}
+
+variable "ansible_user" {
+  description = "Ansible user"
+}
+
+variable "ansible_password" {
+  description = "Ansible user password"
 }
