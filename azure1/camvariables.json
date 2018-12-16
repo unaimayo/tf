@@ -1,0 +1,120 @@
+{
+  "input_datatypes": [ ],
+  "input_namespaces": [ ],
+  "output_namespace": "",
+  "input_groups": [
+    {
+      "name": "Globals",
+      "label": "Globals"
+    },
+    {
+      "name": "Instances-azurerm_virtual_machine",
+      "label": "Instances - azurerm_virtual_machine"
+    }
+  ],
+  "output_groups": [ ],
+  "template_input_params": [
+    {
+      "name": "azure_region",
+      "label": "Azure Region",
+      "description": "Azure region to deploy infrastructure resources",
+      "type": "string",
+      "default": "West US",
+      "validation": "",
+      "group_name": "Globals",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "name_prefix",
+      "label": "Name Prefix",
+      "description": "Prefix of names for Azure resources",
+      "type": "string",
+      "default": "tomcat",
+      "validation": "",
+      "group_name": "Globals",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "admin_user",
+      "label": "Admin User",
+      "description": "Name of an administrative user to be created in virtual machine",
+      "type": "string",
+      "default": "ibmadmin",
+      "validation": "",
+      "group_name": "Instances-azurerm_virtual_machine",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "admin_user_password",
+      "label": "Admin User Password",
+      "description": "Password of the newly created administrative user",
+      "type": "string",
+      "default": "",
+      "validation": "",
+      "group_name": "Instances-azurerm_virtual_machine",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "user_public_key",
+      "label": "User Public Key",
+      "description": "Public SSH key used to connect to the virtual machine",
+      "type": "string",
+      "default": "None",
+      "validation": "",
+      "group_name": "Instances-azurerm_virtual_machine",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    }
+  ],
+  "template_output_params": [
+    {
+      "name": "Tomcat VM Public IP",
+      "label": "Tomcat Vm Public Ip",
+      "description": "Tomcat Vm Public Ip",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    },
+    {
+      "name": "Tomcat Private IP",
+      "label": "Tomcat Private Ip",
+      "description": "Tomcat Private Ip",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    },
+    {
+      "name": "Please Verify Tomcat Installation",
+      "label": "Please Verify Tomcat Installation",
+      "description": "Please Verify Tomcat Installation",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    }
+  ]
+}
