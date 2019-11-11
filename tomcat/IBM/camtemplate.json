@@ -1,0 +1,13 @@
+{
+   "name": "Tomcat instance on IBM Cloud",
+   "description": "Apache Tomcat server running on IBM Cloud.",
+   "type": "userCreated",
+   "manifest": {
+     "template_type": "Terraform",
+     "template_format": "HCL",
+     "template_provider": "IBM"
+   },
+   "metadata": {
+     "bullets": []
+   }
+ }
