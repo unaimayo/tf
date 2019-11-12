@@ -70,7 +70,7 @@ resource "null_resource" "execute_ansible" {
   # Create the Host File for example
   provisioner "file" {
     content = <<EOF
-default ansible_host=${ibm_compute_vm_instance.ubuntu_small_virtual_guest.ipv4_address} ansible_user='root' ansible_ssh_private_key_file=ssh_key ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+default ansible_host=${ibm_compute_vm_instance.ubuntu_small_virtual_guest.ipv4_address} ansible_user='root' ansible_ssh_private_key_file=/tmp/ssh_key ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 EOF
 
     destination = "/tmp/ansible-playbook-host"
