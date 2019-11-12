@@ -70,7 +70,7 @@ resource "null_resource" "execute_ansible" {
   # Create the Host File for example
   provisioner "file" {
     content = <<EOF
-default ansible_host=${ibm_compute_vm_instance.ubuntu_small_virtual_guest.ipv4_address} ansible_user='root' ansible_ssh_private_key_file=/tmp/ssh_key ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+default ansible_host=${ibm_compute_vm_instance.ubuntu_small_virtual_guest.ipv4_address} ansible_user='root' ansible_ssh_private_key_file=/tmp/ssh_key'
 EOF
 
     destination = "/tmp/ansible-playbook-host"
@@ -86,7 +86,7 @@ EOF
   # Execute the script remotely
   provisioner "remote-exec" {
     inline = [
-      "cd tomcat_playbook && ansible-playbook -i \"/tmp/ansible-playbook-host\" configure-linux-box.yml",
+      "cd tomcat_playbook && export ANSIBLE_HOST_KEY_CHECKING=False && ansible-playbook -i \"/tmp/ansible-playbook-host\" configure-linux-box.yml",
     ]
   }
 }
