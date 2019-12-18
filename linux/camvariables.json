@@ -1,0 +1,100 @@
+{
+  "input_datatypes": [ ],
+  "input_namespaces": [ ],
+  "output_namespace": "",
+  "input_groups": [
+    {
+      "name": "Instances-ibm_compute_vm_instance.vm_instance",
+      "label": "Instances - ibm_compute_vm_instance.vm_instance"
+    },
+    {
+      "name": "Other",
+      "label": "Other"
+    },
+    {
+      "name": "instances",
+      "label": "Instances"
+    }
+  ],
+  "output_groups": [ ],
+  "template_input_params": [
+    {
+      "name": "public_ssh_key",
+      "label": "Public Ssh Key",
+      "description": "Public SSH key used to connect to the virtual guest",
+      "type": "string",
+      "default": "",
+      "validation": "",
+      "group_name": "",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "datacenter",
+      "label": "Datacenter",
+      "description": "Softlayer datacenter where infrastructure resources will be deployed",
+      "type": "string",
+      "default": "",
+      "validation": "",
+      "group_name": "",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "hostname",
+      "label": "Hostname",
+      "description": "Hostname of the virtual instance (small flavor) to be deployed",
+      "type": "string",
+      "default": "debian-small",
+      "validation": "",
+      "group_name": "",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    },
+    {
+      "name": "domain",
+      "label": "Domain",
+      "description": "VM domain",
+      "type": "string",
+      "default": "",
+      "validation": "",
+      "group_name": "",
+      "required": true,
+      "secured": false,
+      "hidden": false,
+      "immutable": false,
+      "immutable_after_create": false
+    }
+  ],
+  "template_output_params": [
+    {
+      "name": "vm_ip",
+      "label": "Vm Ip",
+      "description": "null",
+      "group_name": "",
+      "secured": false,
+      "hidden": false,
+      "shortname": "",
+      "type": "string"
+    },
+    {
+      "name": "ssh_private_key",
+      "label": "SSH Private Key",
+      "description": null,
+      "group_name": "",
+      "secured": true,
+      "hidden": true,
+      "shortname": "",
+      "type": "string"
+    }
+  ]
+}

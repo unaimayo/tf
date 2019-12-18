@@ -1,0 +1,66 @@
+{
+    "name": "Linux Server with SSH key",
+    "description": "A sample cloud resource template that creates a Linux virtual server and ssh key.",
+    "version": "1.0",
+    "imageUrl": "./assets/svg/IBM_WebSphere_Standalone.svg",
+    "image": "tp_WAS_standalone.png",
+    "type": "userCreated",
+    "status": "active",
+    "manifest": {
+      "template_type": "Terraform",
+      "template_format": "HCL",
+      "template_provider": "IBM",
+      "template": {
+        "templateData": "",
+        "templateVariables": "",
+        "templateOutput": ""
+      }
+    },
+    "metadata": {
+      "displayName": "Ubuntu Server with SSH Key",
+      "providerDisplayName": "IBM",
+      "longDescription": "Use this cloud resource template to quickly provision a linux 64 bit virtual server with ssh key in a datacenter of your choice.",
+      "bullets": [
+       {
+         "title": "Clouds",
+         "description": "IBM Cloud"
+       },
+       {
+         "title": "Operating systems supported",
+         "description": "<ul><li>IBM Cloud:<ul style=\"margin-left: 20px;\"><li>Ubuntu 16.04/18.04</li><li>CentOS 6/7</li></ul></li></ul>"
+       },
+       {
+         "title": "Topology",
+         "description": "IBM Cloud: 1 virtual machine"
+       },
+       {
+         "title": "Default virtual machine settings",
+         "description": "<ul><li>IBM Cloud:<ul style=\"margin-left: 20px;\"><li>Storage = 25GB SAN</li><li>Network: Private IP - Computed, Public IP - Computed</li></ul></li></ul>"
+       },
+       {
+         "title": "Usage and special notes",
+         "description": "<ol class=\"list-numbering\"><li>Creates a virtual server with an ssh key provided by the user in a datacenter specified by the user.</li><li>Deployment takes approximately 5 minutes to complete.</li></ol>"
+       }
+     ],
+      "featuredImageUrl": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/ic_patternengine_50.png",
+      "imageUrl": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/ic_patternengine_50.png",
+      "mediumImageUrl": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/ic_patternengine_32.png",
+      "smallImageUrl": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/ic_patternengine_24.png",
+      "documentationUrl": "https://console.stage1.ng.bluemix.net/docs/services/CloudAutomationManager/index.html",
+      "termsUrl": "http://www-03.ibm.com/software/sla/sladb.nsf/sla/bm-7448-01",
+      "media": [
+        {
+          "type": "image",
+          "thumbnailUrl": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/screenshots_1.png",
+          "url": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/screenshots_1_large.png",
+          "caption": ""
+        },
+        {
+          "type": "image",
+          "thumbnailUrl": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/screenshots_2.png",
+          "url": "https://ibmpatternengine-staticcontent-prod.eu-gb.mybluemix.net/screenshots_2_large.png",
+          "caption": ""
+        }
+      ]
+    }
+  }
