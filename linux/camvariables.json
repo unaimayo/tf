@@ -91,8 +91,8 @@
       "label": "SSH Private Key",
       "description": null,
       "group_name": "",
-      "secured": true,
-      "hidden": true,
+      "secured": false,
+      "hidden": false,
       "shortname": "",
       "type": "string"
     }
