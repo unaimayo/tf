@@ -6,7 +6,7 @@
 
 
 output "vm_ip" {
-  value = "${ibm_compute_vm_instance.ubuntu_small_virtual_guest.ipv4_address}"
+  value = "${lookup(ibm_compute_vm_instance.ubuntu_small_virtual_guest.ipv4_address)}"
 }
 
 output "ssh_private_key" {
