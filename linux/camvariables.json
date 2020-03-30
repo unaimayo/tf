@@ -80,8 +80,8 @@
       "label": "SSH Private Key",
       "description": "null",
       "group_name": "",
-      "secured": false,
-      "hidden": false,
+      "secured": true,
+      "hidden": true,
       "shortname": "",
       "type": "string"
     }
