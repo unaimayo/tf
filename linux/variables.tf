@@ -4,11 +4,6 @@
 ##
 #####################################################################
 
-
-variable "public_ssh_key" {
-  description = "Public SSH key used to connect to the virtual guest"
-}
-
 variable "datacenter" {
   description = "Softlayer datacenter where infrastructure resources will be deployed"
 }

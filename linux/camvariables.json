@@ -19,32 +19,19 @@
   "output_groups": [ ],
   "template_input_params": [
     {
-      "name": "public_ssh_key",
-      "label": "Public Ssh Key",
-      "description": "Public SSH key used to connect to the virtual guest",
-      "type": "string",
-      "default": "",
-      "validation": "",
-      "group_name": "",
-      "required": true,
-      "secured": false,
-      "hidden": false,
-      "immutable": false,
-      "immutable_after_create": false
-    },
-    {
       "name": "datacenter",
       "label": "Datacenter",
       "description": "Softlayer datacenter where infrastructure resources will be deployed",
       "type": "string",
       "default": "",
-      "validation": "",
+      "regex": "",
       "group_name": "",
       "required": true,
       "secured": false,
       "hidden": false,
       "immutable": false,
-      "immutable_after_create": false
+      "immutable_after_create": false,
+      "validation": ""
     },
     {
       "name": "hostname",
@@ -52,13 +39,14 @@
       "description": "Hostname of the virtual instance (small flavor) to be deployed",
       "type": "string",
       "default": "debian-small",
-      "validation": "",
+      "regex": "",
       "group_name": "",
       "required": true,
       "secured": false,
       "hidden": false,
       "immutable": false,
-      "immutable_after_create": false
+      "immutable_after_create": false,
+      "validation": ""
     },
     {
       "name": "domain",
@@ -66,13 +54,14 @@
       "description": "VM domain",
       "type": "string",
       "default": "",
-      "validation": "",
+      "regex": "",
       "group_name": "",
       "required": true,
       "secured": false,
       "hidden": false,
       "immutable": false,
-      "immutable_after_create": false
+      "immutable_after_create": false,
+      "validation": ""
     }
   ],
   "template_output_params": [
@@ -89,7 +78,7 @@
     {
       "name": "ssh_private_key",
       "label": "SSH Private Key",
-      "description": null,
+      "description": "null",
       "group_name": "",
       "secured": false,
       "hidden": false,
