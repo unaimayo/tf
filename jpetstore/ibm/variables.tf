@@ -66,7 +66,7 @@ variable "ucd_user" {
 variable "ucd_password" {
   type = "string"
   description = "UCD Password."
-  default = ""
+  default = "2ee156b2-1f60-45b6-a1c3-332c5bd095ae"
 }
 
 variable "ucd_server_url" {

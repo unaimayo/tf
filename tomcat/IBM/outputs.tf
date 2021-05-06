@@ -4,10 +4,10 @@
 ##
 #####################################################################
 
-output "vm_ip" {
-  value = "Public : ${ibm_compute_vm_instance.ubuntu_small_virtual_guest.ipv4_address}"
+output "IP" {
+  value = "${ibm_compute_vm_instance.vm_webserver.ipv4_address}"
 }
 
-output "tomcat_url" {
-  value = "http://${ibm_compute_vm_instance.ubuntu_small_virtual_guest.ipv4_address}:8080"
+output "url" {
+  value = "http://${ibm_compute_vm_instance.vm_webserver.ipv4_address}:8080"
 }

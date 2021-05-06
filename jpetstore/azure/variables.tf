@@ -1,30 +1,44 @@
 #####################################################################
 ##
-##      Created 11/11/19 by ucdpadmin for cloud 304454_unai.mayo. for tomcat
+##      Created 5/5/21 by ucdpadmin for cloud azure_mapfre. for azure
 ##
 #####################################################################
 
-variable "vm_domain" {
-  type = string
-  description = "The domain for the computing instance."
-  default = "lab.net"
-}
-
-variable "vm_datacenter" {
-  type = string
-  description = "The datacenter in which you want to provision the instance. NOTE: If dedicated_host_name or dedicated_host_id is provided then the datacenter should be same as the dedicated host datacenter."
-  default = "ams03"
-}
-
-variable "vm_os_reference_code" {
+variable "azurerm_network_address_space" {
   type = string
   description = "Generated"
-  default = "UBUNTU_16_64"
+  default = "10.0.0.0/16"
 }
 
-variable "vm_webserver_hostname" {
+variable "webserver_name" {
   type = string
-  description = "The hostname for the computing instance."
+  description = "Generated"
+  default = "az-tomcat-mapfre"
+}
+
+variable "vm_location" {
+  type = string
+  description = "Generated"
+  default = "West Europe"
+}
+
+
+variable "webserver_azure_user" {
+  type = string
+  description = "Generated"
+  default = "ibmadmin"
+}
+
+variable "webserver_azure_user_password" {
+  type = string
+  description = "Generated"
+  default = "Passw0rd.muy.segura"
+}
+
+variable "address_prefix" {
+  type = string
+  description = "Generated"
+  default = "10.0.1.0/24"
 }
 
 variable "tomcat_home" {
@@ -60,7 +74,7 @@ variable "ucd_user" {
 variable "ucd_password" {
   type = string
   description = "UCD password"
-  default = "14ee53c0-b64a-495b-81da-373e2f0db1ff"
+  default = "eb0fa012-b3a3-4f71-ad29-476b58d27ba7"
 }
 
 variable "ucd_server_url" {
@@ -68,3 +82,17 @@ variable "ucd_server_url" {
   description = "UCD server URL"
   default = "https://159.8.228.106:8443"
 }
+
+variable "ucd_environment" {
+  type = string
+  description = "Environment name"
+  default = "DEV"
+}
+
+variable "resource_group_name" {
+  type = string
+  description = "Generated"
+  default = "jpetstore_group"
+}
+
+

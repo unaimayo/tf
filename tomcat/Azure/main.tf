@@ -119,6 +119,90 @@ resource "azurerm_virtual_machine" "web" {
   network_interface_ids = ["${azurerm_network_interface.web.id}"]
   vm_size               = "Standard_A2"
 
+  provisioner "file" {
+    destination = "/tmp"
+    content     = <<EOT
+#!/bin/bash
+LOGFILE="/var/log/install_tomcat.log"
+TOMCAT_USER=tomcat
+TOMCAT_GROUP=tomcat
+TOMCAT_PATH=$1
+TOMCAT_VERSION=$2
+TOMCAT_ADMIN_USER=$3
+TOMCAT_ADMIN_PWD=$4
+
+apt-get update
+apt-get install -y wget
+# create user and group
+groupadd $TOMCAT_GROUP
+useradd -M -s /bin/nologin -g $TOMCAT_GROUP -d $TOMCAT_PATH $TOMCAT_USER
+mkdir -p $TOMCAT_PATH
+# download software
+TOMCAT_SOFT="apache-tomcat-$TOMCAT_VERSION.tar.gz"
+wget http://apache.rediris.es/tomcat/tomcat-8/v$TOMCAT_VERSION/bin/$TOMCAT_SOFT
+# install jdk
+apt-get install -y openjdk-8-jdk
+# install tomcat
+tar xfz $TOMCAT_SOFT -C $TOMCAT_PATH --strip-components=1
+# create admin user
+cat << EOF > $TOMCAT_PATH/conf/tomcat-users.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcat-users xmlns="http://tomcat.apache.org/xml"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+              version="1.0">
+  <role rolename="manager-script"/>
+  <user username="$TOMCAT_ADMIN_USER" password="$TOMCAT_ADMIN_PWD" roles="manager-script"/>
+</tomcat-users>
+EOF
+# change owner
+chown -R $TOMCAT_USER:$TOMCAT_GROUP $TOMCAT_PATH || fail "Error changing owner for $TOMCAT_PATH"
+# clean up
+rm -f $TOMCAT_SOFT
+# create systemd service
+cat << EOF > /etc/systemd/system/tomcat.service
+# Systemd unit file for tomcat
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+Environment=CATALINA_PID=$TOMCAT_PATH/temp/tomcat.pid
+Environment=CATALINA_HOME=$TOMCAT_PATH
+Environment=CATALINA_BASE=$TOMCAT_PATH
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+ExecStart=$TOMCAT_PATH/bin/startup.sh
+ExecStop=/bin/kill -15 $MAINPID
+
+User=$TOMCAT_USER
+Group=$TOMCAT_GROUP
+UMask=0007
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+# Add JPetSTore images folder
+mkdir -p /opt/jpetstore/images
+cd $TOMCAT_PATH/conf
+awk '/<\/Host>/ { print "        <Context docBase=\"/opt/jpetstore/images\" path=\"/images\" />"; print; next }1' server.xml > server.xml.1
+mv server.xml.1 server.xml
+# start & enable tomcat service
+systemctl enable tomcat || fail "Error enabling tomcat service"
+systemctl start tomcat || fail "Error starting tomcat service"
+EOT
+}
+  connection {
+    type = "ssh"
+    user = "${var.web_connection_user}"
+    password = "${var.web_connection_password}"
+  }
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
@@ -144,35 +228,5 @@ resource "azurerm_virtual_machine" "web" {
   }
 }
 
-#################################
-# Execute Ansible playbook
-#################################
 
-resource "null_resource" "execute_ansible" {
-  depends_on = ["azurerm_virtual_machine.web"]
-
-  # Specify the ssh connection
-  connection {
-    type        = "ssh"
-    user        = "${var.ansible_user}"
-    password    = "${var.ansible_password}"
-    host        = "${var.ansible_host}"
-  }
-
-  # Create the Host File for example
-  provisioner "file" {
-    content = <<EOF
-default ansible_host=${azurerm_public_ip.web.ip_address} ansible_user='${var.admin_user}' ansible_password='${var.admin_user_password}' ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-EOF
-
-    destination = "/tmp/ansible-playbook-host"
-  }
-
-  # Execute the script remotely
-  provisioner "remote-exec" {
-    inline = [
-      "cd agbar && ansible-playbook -i \"/tmp/ansible-playbook-host\" configure-linux-box.yml",
-    ]
-  }
-}
 

@@ -38,3 +38,13 @@ variable "ansible_user" {
 variable "ansible_password" {
   description = "Ansible user password"
 }
+
+variable "web_connection_user" {
+  type = "string"
+  description = "Generated"
+}
+
+variable "web_connection_password" {
+  type = "string"
+  description = "Generated"
+}
